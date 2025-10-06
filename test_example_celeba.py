@@ -350,18 +350,23 @@ def main():
                             mask_sensor_dist=config.mask_sensor_dist, 
                             obj_x_num=config.obj_x_num, obj_y_num=config.obj_y_num)
     
+    # support Windows、Linux、Mac GPU or CPU
+    device = torch.device("cuda") if torch.cuda.is_available() else \
+             torch.device("mps") if torch.backends.mps.is_available() else \
+             torch.device("cpu")
+
     if config.load_pretrain:
-        checkpoint = torch.load(config.ckpt_to_load, weights_only=True)
+        checkpoint = torch.load(config.ckpt_to_load, map_location=device, weights_only=True)
         generator_e.load_state_dict(checkpoint['ge_model_state_dict'])
         generator_d.load_state_dict(checkpoint['gd_model_state_dict'])
 
-    generator_e = generator_e.to('cuda')
-    generator_d = generator_d.to('cuda')
+    generator_e = generator_e.to(device)
+    generator_d = generator_d.to(device)
 
     with torch.no_grad():
         noise = torch.randn(config.test_batch_size, config.in_channel, 
                             config.img_size, config.img_size, 
-                            generator=torch.manual_seed(config.seed)).to('cuda')
+                            generator=torch.manual_seed(config.seed)).to(device)
 
         gen_img, _ = generator_e(noise)
         d2nn_img = generator_d(gen_img)
