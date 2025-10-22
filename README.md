@@ -65,9 +65,9 @@ We conduct a lot of simulations to comprehensively evaluate the scalability of o
 
 ### There are some notes for the experimental realization:
 - Using high quality laser (preferring filtered by pinehole <50 $\mu m$)
-- For the expander of laser, use commercial composite lens to prevent off-axis aberrations in large field-of-view optical generation.
+- For the expander of laser, use commercial composite lens to prevent off-axis aberrations in large field-of-view optical generation
 - The diffractive elements need perfectly aligned with multi-axes translation stages
-- Distance between the components needs precisely calibration. Calibrate the propagation matrix with a camera if needed.
+- Distance between the components needs precisely calibration. Calibrate the propagation matrix with a camera if needed. For the reflective SLM, please change the distance into its negative after every odd-numbered reflection 
 
 ## 🏋️‍♀️ Training
 
